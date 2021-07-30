@@ -107,8 +107,11 @@ Matrix<T, N, M>::~Matrix()
 
 template<typename T, size_t N, size_t M>
 T& Matrix<T, N, M>::operator()(size_t row, size_t colum) const
-{
-	return GetMatrix()[row - 1][colum - 1];
+{	
+	if (m_rows >= row && m_colums >= colum )
+		return GetMatrix()[row - 1][colum - 1];
+	else 
+		throw std::out_of_range("Matrices sizes mismatch");
 }
 
 template<typename T, size_t N, size_t M>
@@ -178,14 +181,19 @@ void Matrix<T, N, M>::print() const
 template<typename T, size_t N, size_t M>
 void Matrix<T, N, M>::setValueAt(size_t row, size_t colum, T value)
 {
-	if (m_rows >= (row - 1) && m_colums >= (colum - 1))
+	if (m_rows >= row  && m_colums >= colum)
 		m_matrix[row - 1][colum - 1] = value;
+	else
+		throw std::out_of_range("Matrices sizes mismatch");
 }
 
 template<typename T, size_t N, size_t M>
 T Matrix<T, N, M>::getValueAt(size_t row, size_t colum) const
 {
-	return m_matrix[row - 1][colum - 1];
+	if (m_rows >= row && m_colums >= colum)
+		return m_matrix[row - 1][colum - 1];
+	else
+		throw std::out_of_range("Matrices sizes mismatch");
 }
 
 template<typename T, typename U, size_t N, size_t M, size_t K, size_t L>
