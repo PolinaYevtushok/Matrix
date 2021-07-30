@@ -52,17 +52,11 @@ Matrix<T, N, M>::Matrix(const Matrix& m)
 }
 
 template<typename T, size_t N, size_t M>
-Matrix<T, N, M>::Matrix(Matrix&& m) 
+Matrix<T, N, M>::Matrix(Matrix&& m):
+	m_rows(m.m_rows),
+	m_colums(m.m_colums),
+	m_matrix(std::move(m.m_matrix))
 {
-	m_matrix = new T * [m_rows];
-	for (int i = 0; i < m_colums; ++i)
-		m_matrix[i] = new T[m_colums];
-	// fill new matrix
-	for (int i = 0; i < m_rows; ++i)
-	{
-		for (int j = 0; j < m_colums; ++j)
-			m_matrix[i][j] = m.GetMatrix()[i][j];
-	}
 	m.m_matrix = nullptr;
 }
 
